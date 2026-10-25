@@ -1,0 +1,13 @@
+GET /health 200 ok
+POST /notes 201 {"id":1,"text":"first note","webhook":"delivered"}
+POST /notes 201 {"id":2,"text":"a slow note","webhook":"timed_out"}
+POST /notes 201 {"id":3,"text":"50% off, the_end","webhook":"delivered"}
+GET /notes/1 200 {"id":1,"text":"first note"}
+GET /notes/9 404 {"error":"note_not_found"}
+GET /notes?q=note 200 [{"id":2,"text":"a slow note"},{"id":1,"text":"first note"}]
+GET /notes?q=50%25 200 [{"id":3,"text":"50% off, the_end"}]
+GET /notes?q=_ 200 [{"id":3,"text":"50% off, the_end"}]
+POST /notes 400 {"error":"invalid_body","detail":"text: length","at":12}
+POST /notes 400 {"error":"invalid_body","detail":"unknown member","at":9}
+POST /notes 413 {"error":"payload_too_large"}
+events: : subscribed||event: note|data: {"id":1,"text":"first note"}||event: note|data: {"id":2,"text":"a slow note"}||event: note|data: {"id":3,"text":"50% off, the_end"}||

@@ -125,6 +125,7 @@ programs to start from, each built and tested with HTTP requests:
 | [`compress/`](examples/compress/main.goose) | Answers compressed according to `Accept-Encoding`, with the optional `plod.compression` module: goose-http's defaults, an export compressed as it's sent in pieces, and a scope with its own compression levels and no zstd |
 | [`upgrade/`](examples/upgrade/main.goose) | An upgraded connection with `plod::upgrade`: a 101, then the client's bytes echoed back until the server closes the connection, or the client closes it first |
 | [`websocket/`](examples/websocket/main.goose) | A WebSocket echo with the optional `plod.websocket` module: `plod::ws_upgrade` at the request, and each message back through `plod::ws_read` |
+| [`notes/`](examples/notes/main.goose) | A service of notes in SQLite (goose-sqlite) on a database lane: a JSON body with a route limit, a search whose pattern is bound, each note streamed as Server-Sent Events once committed, to the streams of every worker through a hub lane that drops a stream too far behind, and a webhook per note within a budget the route sets, whose timeout leaves the note committed |
 | [`device/`](examples/device/) | A board's API: sysfs readings, bounded settings, a firmware upload, a bearer token, and CORS, on one worker |
 
 ## Concepts
